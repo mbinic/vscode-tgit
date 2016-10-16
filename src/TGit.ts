@@ -1,0 +1,119 @@
+'use strict';
+
+import * as vscode from 'vscode';
+
+export class TGit {
+
+    public static fetch(){
+        this.run("fetch", false);
+    }
+
+    public static showLog(){
+        this.run("log");
+    }
+
+    public static showFileLog(){
+        this.run("log", true);
+    }
+
+    public static commit(){
+        this.run("commit");
+    }
+
+    public static revert(){
+        this.run("revert");
+    }
+
+    public static cleanup(){
+        this.run("cleanup");
+    }
+
+    public static resolve(){
+        this.run("resolve", true);
+    }
+
+    public static switch(){
+        this.run("switch");
+    }
+
+    public static merge(){
+        this.run("merge");
+    }
+
+    public static diff(){
+        this.run("diff", true);
+    }
+
+    public static blame(){
+        let line = 1;
+        if (vscode.window.activeTextEditor){
+            line = vscode.window.activeTextEditor.selection.active.line + 1;
+        }
+        this.run("blame", true, `/line:${line}`);
+    }
+
+    public static pull(){
+        this.run("pull");
+    }
+
+    public static push(){
+        this.run("push");
+    }
+
+    public static rebase(){
+        this.run("rebase");
+    }
+
+    public static stashSave(){
+        this.run("stashsave");
+    }
+
+    public static stashPop(){
+        this.run("stashpop");
+    }
+
+    public static stashList(){
+        this.run("reflog", false, '/ref:"refs/stash"');
+    }
+
+    public static sync(){
+        this.run("sync");
+    }
+
+    private static run(command: string, withFilePath: boolean = false, additionalParams: string = null){
+        let workingDir = this.getWorkingDirectory();
+        let path = withFilePath ? this.getWorkingFile() : workingDir;
+        if (!workingDir || workingDir == "." || !path || path == "."){
+            vscode.window.showErrorMessage(`This command requires an existing file ${withFilePath ? "" : "or folder"} to be opened.`);
+            return;
+        }
+
+        let launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
+        let cmd = `"${launcherPath}" /command:${command}`;
+        if (withFilePath){
+            cmd += ` /path:"${path}"`;
+        }
+        if (additionalParams){
+            cmd += " " + additionalParams;
+        }
+        require("child_process").exec(cmd, { cwd: workingDir }); 
+    }
+
+    private static getWorkingDirectory(){
+        if (vscode.workspace.rootPath){
+            return vscode.workspace.rootPath;
+        }
+        let currentFile = this.getWorkingFile();
+        if (currentFile){
+            return require("path").dirname(currentFile);
+        }
+        return null;
+    }
+
+    private static getWorkingFile(){
+        if (vscode.window.activeTextEditor){
+            return vscode.window.activeTextEditor.document.fileName;
+        }
+        return null;
+    }
+}

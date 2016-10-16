@@ -1,0 +1,109 @@
+{
+    "name": "tgit-cmds",
+    "displayName": "TortoiseGit Commands",
+    "description": "Set of commands for launching TortoiseGit dialogs",
+    "keywords": ["git", "tortoise", "keybindings"],
+    "version": "1.0.0",
+    "publisher": "mbinic",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/mbinic/vscode-tgit.git"
+    },
+    "bugs": {
+        "url": "https://github.com/mbinic/vscode-tgit/issues"
+    },
+    "homepage": "https://github.com/mbinic/vscode-tgit/blob/master/README.md",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:tgit.fetch",
+        "onCommand:tgit.showLog",
+        "onCommand:tgit.showFileLog",
+        "onCommand:tgit.commit",
+        "onCommand:tgit.revert",
+        "onCommand:tgit.cleanup",
+        "onCommand:tgit.resolve",
+        "onCommand:tgit.switch",
+        "onCommand:tgit.merge",
+        "onCommand:tgit.diff",
+        "onCommand:tgit.blame",
+        "onCommand:tgit.pull",
+        "onCommand:tgit.push",
+        "onCommand:tgit.rebase",
+        "onCommand:tgit.stashSave",
+        "onCommand:tgit.stashPop",
+        "onCommand:tgit.stashList",
+        "onCommand:tgit.sync"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "TortoiseGit",
+            "properties": {
+                "tgit.launcherPath": {
+                    "type": "string",
+                    "default": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
+                    "description": "Path to the TortoiseGit command launcher (TortoiseGitProc.exe)."
+                }
+            }
+        },
+        "commands": [
+            { "command": "tgit.fetch", "title": "TGit: Fetch"},
+            { "command": "tgit.showLog", "title": "TGit: Show Log"},
+            { "command": "tgit.showFileLog", "title": "TGit: Show File Log"},
+            { "command": "tgit.commit", "title": "TGit: Commit"},
+            { "command": "tgit.revert", "title": "TGit: Revert"},
+            { "command": "tgit.cleanup", "title": "TGit: Clean Up"},
+            { "command": "tgit.resolve", "title": "TGit: Resolve"},
+            { "command": "tgit.switch", "title": "TGit: Switch/Checkout"},
+            { "command": "tgit.merge", "title": "TGit: Merge"},
+            { "command": "tgit.diff", "title": "TGit: File Diff"},
+            { "command": "tgit.blame", "title": "TGit: Blame"},
+            { "command": "tgit.pull", "title": "TGit: Pull"},
+            { "command": "tgit.push", "title": "TGit: Push"},
+            { "command": "tgit.rebase", "title": "TGit: Rebase"},
+            { "command": "tgit.stashSave", "title": "TGit: Stash Save"},
+            { "command": "tgit.stashPop", "title": "TGit: Stash Pop"},
+            { "command": "tgit.stashList", "title": "TGit: Stash List"},
+            { "command": "tgit.sync", "title": "TGit: Sync"}
+        ],
+        "keybindings": [
+            { "command": "tgit.fetch", "key": "ctrl+g ctrl+f" },
+            { "command": "tgit.showLog", "key": "ctrl+g ctrl+l" },
+            { "command": "tgit.showFileLog", "key": "ctrl+shift+alt+g ctrl+shift+alt+l" },
+            { "command": "tgit.commit", "key": "ctrl+g ctrl+c" },
+            { "command": "tgit.revert", "key": "ctrl+g ctrl+v" },
+            { "command": "tgit.cleanup", "key": "ctrl+g ctrl+n" },
+            { "command": "tgit.resolve", "key": "ctrl+g ctrl+e" },
+            { "command": "tgit.switch", "key": "ctrl+g ctrl+s" },
+            { "command": "tgit.merge", "key": "ctrl+g ctrl+m" },
+            { "command": "tgit.diff", "key": "ctrl+shift+alt+g ctrl+shift+alt+d" },
+            { "command": "tgit.blame", "key": "ctrl+shift+alt+g ctrl+shift+alt+b" },
+            { "command": "tgit.pull", "key": "ctrl+g ctrl+p" },
+            { "command": "tgit.push", "key": "ctrl+g ctrl+u" },
+            { "command": "tgit.rebase", "key": "ctrl+g ctrl+r" },
+            { "command": "tgit.stashSave", "key": "ctrl+g ctrl+a" },
+            { "command": "tgit.stashPop", "key": "ctrl+g ctrl+o" },
+            { "command": "tgit.stashList", "key": "ctrl+g ctrl+i" },
+            { "command": "tgit.sync", "key": "ctrl+g ctrl+y" }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    }
+}

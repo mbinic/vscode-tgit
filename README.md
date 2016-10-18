@@ -2,9 +2,10 @@
 
 ## Introduction
 
-This extension provides commands for launching common TortoiseGit dialogs from within Visual Studio Code.
+Inspired by the [TortoiseGit Toolbar Visual Studio extension](https://github.com/MRCollective/TortoiseGitToolbar), this extension provides commands for launching common TortoiseGit dialogs from within Visual Studio Code.
 
-You can execute these commands either by searching for `TGit` in the Command Palette (`Ctrl+Shift+P`), or via keyboard shortcuts.  
+You can execute these commands either by searching for `TGit` in the Command Palette (`Ctrl+Shift+P`), or via keyboard shortcuts.
+
 
 ## Default shortcuts
 

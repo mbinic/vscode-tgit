@@ -14,6 +14,7 @@
     },
     "homepage": "https://github.com/mbinic/vscode-tgit/blob/master/README.md",
     "license": "MIT",
+    "icon": "vscode-tgit-icon.png",
     "engines": {
         "vscode": "^1.5.0"
     },

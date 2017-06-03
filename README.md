@@ -6,7 +6,6 @@ Inspired by the [TortoiseGit Toolbar Visual Studio extension](https://github.com
 
 You can execute these commands either by searching for `TGit` in the Command Palette (`Ctrl+Shift+P`), or via keyboard shortcuts.
 
-
 ## Default shortcuts
 
 Global shortcuts:
@@ -44,16 +43,6 @@ Since these shortcuts will make Ctrl+G (Go To Line) inaccessible, you can redefi
 
 This extension contributes the `tgit.launcherPath` setting, specifying the full path to `TortoiseGitProc.exe`.
 It is set to the default installation path of TortoiseGit, so you might need to adjust it if you installed elsewhere.
-
-## Changelog
-
-### 1.1.0
-
-Launch commands from git root folder (containing .git subfolder).
-
-### 1.0.0
-
-Initial release.
 
 ---
 

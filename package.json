@@ -2,8 +2,12 @@
     "name": "tgit-cmds",
     "displayName": "TortoiseGit Commands",
     "description": "Set of commands for launching TortoiseGit dialogs",
-    "keywords": ["git", "tortoise", "keybindings"],
-    "version": "1.1.0",
+    "keywords": [
+        "git",
+        "tortoise",
+        "keybindings"
+    ],
+    "version": "1.1.1",
     "publisher": "mbinic",
     "repository": {
         "type": "git",
@@ -55,44 +59,152 @@
             }
         },
         "commands": [
-            { "command": "tgit.fetch", "title": "TGit: Fetch"},
-            { "command": "tgit.showLog", "title": "TGit: Show Log"},
-            { "command": "tgit.showFileLog", "title": "TGit: Show File Log"},
-            { "command": "tgit.commit", "title": "TGit: Commit"},
-            { "command": "tgit.revert", "title": "TGit: Revert"},
-            { "command": "tgit.cleanup", "title": "TGit: Clean Up"},
-            { "command": "tgit.resolve", "title": "TGit: Resolve"},
-            { "command": "tgit.switch", "title": "TGit: Switch/Checkout"},
-            { "command": "tgit.merge", "title": "TGit: Merge"},
-            { "command": "tgit.diff", "title": "TGit: File Diff"},
-            { "command": "tgit.blame", "title": "TGit: Blame"},
-            { "command": "tgit.pull", "title": "TGit: Pull"},
-            { "command": "tgit.push", "title": "TGit: Push"},
-            { "command": "tgit.rebase", "title": "TGit: Rebase"},
-            { "command": "tgit.stashSave", "title": "TGit: Stash Save"},
-            { "command": "tgit.stashPop", "title": "TGit: Stash Pop"},
-            { "command": "tgit.stashList", "title": "TGit: Stash List"},
-            { "command": "tgit.sync", "title": "TGit: Sync"}
+            {
+                "command": "tgit.fetch",
+                "title": "TGit: Fetch"
+            },
+            {
+                "command": "tgit.showLog",
+                "title": "TGit: Show Log"
+            },
+            {
+                "command": "tgit.showFileLog",
+                "title": "TGit: Show File Log"
+            },
+            {
+                "command": "tgit.commit",
+                "title": "TGit: Commit"
+            },
+            {
+                "command": "tgit.revert",
+                "title": "TGit: Revert"
+            },
+            {
+                "command": "tgit.cleanup",
+                "title": "TGit: Clean Up"
+            },
+            {
+                "command": "tgit.resolve",
+                "title": "TGit: Resolve"
+            },
+            {
+                "command": "tgit.switch",
+                "title": "TGit: Switch/Checkout"
+            },
+            {
+                "command": "tgit.merge",
+                "title": "TGit: Merge"
+            },
+            {
+                "command": "tgit.diff",
+                "title": "TGit: File Diff"
+            },
+            {
+                "command": "tgit.blame",
+                "title": "TGit: Blame"
+            },
+            {
+                "command": "tgit.pull",
+                "title": "TGit: Pull"
+            },
+            {
+                "command": "tgit.push",
+                "title": "TGit: Push"
+            },
+            {
+                "command": "tgit.rebase",
+                "title": "TGit: Rebase"
+            },
+            {
+                "command": "tgit.stashSave",
+                "title": "TGit: Stash Save"
+            },
+            {
+                "command": "tgit.stashPop",
+                "title": "TGit: Stash Pop"
+            },
+            {
+                "command": "tgit.stashList",
+                "title": "TGit: Stash List"
+            },
+            {
+                "command": "tgit.sync",
+                "title": "TGit: Sync"
+            }
         ],
         "keybindings": [
-            { "command": "tgit.fetch", "key": "ctrl+g ctrl+f" },
-            { "command": "tgit.showLog", "key": "ctrl+g ctrl+l" },
-            { "command": "tgit.showFileLog", "key": "ctrl+shift+alt+g ctrl+shift+alt+l" },
-            { "command": "tgit.commit", "key": "ctrl+g ctrl+c" },
-            { "command": "tgit.revert", "key": "ctrl+g ctrl+v" },
-            { "command": "tgit.cleanup", "key": "ctrl+g ctrl+n" },
-            { "command": "tgit.resolve", "key": "ctrl+g ctrl+e" },
-            { "command": "tgit.switch", "key": "ctrl+g ctrl+s" },
-            { "command": "tgit.merge", "key": "ctrl+g ctrl+m" },
-            { "command": "tgit.diff", "key": "ctrl+shift+alt+g ctrl+shift+alt+d" },
-            { "command": "tgit.blame", "key": "ctrl+shift+alt+g ctrl+shift+alt+b" },
-            { "command": "tgit.pull", "key": "ctrl+g ctrl+p" },
-            { "command": "tgit.push", "key": "ctrl+g ctrl+u" },
-            { "command": "tgit.rebase", "key": "ctrl+g ctrl+r" },
-            { "command": "tgit.stashSave", "key": "ctrl+g ctrl+a" },
-            { "command": "tgit.stashPop", "key": "ctrl+g ctrl+o" },
-            { "command": "tgit.stashList", "key": "ctrl+g ctrl+i" },
-            { "command": "tgit.sync", "key": "ctrl+g ctrl+y" }
+            {
+                "command": "tgit.fetch",
+                "key": "ctrl+g ctrl+f"
+            },
+            {
+                "command": "tgit.showLog",
+                "key": "ctrl+g ctrl+l"
+            },
+            {
+                "command": "tgit.showFileLog",
+                "key": "ctrl+shift+alt+g ctrl+shift+alt+l"
+            },
+            {
+                "command": "tgit.commit",
+                "key": "ctrl+g ctrl+c"
+            },
+            {
+                "command": "tgit.revert",
+                "key": "ctrl+g ctrl+v"
+            },
+            {
+                "command": "tgit.cleanup",
+                "key": "ctrl+g ctrl+n"
+            },
+            {
+                "command": "tgit.resolve",
+                "key": "ctrl+g ctrl+e"
+            },
+            {
+                "command": "tgit.switch",
+                "key": "ctrl+g ctrl+s"
+            },
+            {
+                "command": "tgit.merge",
+                "key": "ctrl+g ctrl+m"
+            },
+            {
+                "command": "tgit.diff",
+                "key": "ctrl+shift+alt+g ctrl+shift+alt+d"
+            },
+            {
+                "command": "tgit.blame",
+                "key": "ctrl+shift+alt+g ctrl+shift+alt+b"
+            },
+            {
+                "command": "tgit.pull",
+                "key": "ctrl+g ctrl+p"
+            },
+            {
+                "command": "tgit.push",
+                "key": "ctrl+g ctrl+u"
+            },
+            {
+                "command": "tgit.rebase",
+                "key": "ctrl+g ctrl+r"
+            },
+            {
+                "command": "tgit.stashSave",
+                "key": "ctrl+g ctrl+a"
+            },
+            {
+                "command": "tgit.stashPop",
+                "key": "ctrl+g ctrl+o"
+            },
+            {
+                "command": "tgit.stashList",
+                "key": "ctrl+g ctrl+i"
+            },
+            {
+                "command": "tgit.sync",
+                "key": "ctrl+g ctrl+y"
+            }
         ]
     },
     "scripts": {

@@ -47,6 +47,10 @@ It is set to the default installation path of TortoiseGit, so you might need to 
 
 ## Changelog
 
+### 1.1.0
+
+Launch commands from git root folder (containing .git subfolder).
+
 ### 1.0.0
 
 Initial release.

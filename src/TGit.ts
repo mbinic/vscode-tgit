@@ -1,6 +1,8 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export class TGit {
 
@@ -81,9 +83,9 @@ export class TGit {
     }
 
     private static run(command: string, withFilePath: boolean = false, additionalParams: string = null){
-        let workingDir = this.getWorkingDirectory();
-        let path = withFilePath ? this.getWorkingFile() : workingDir;
-        if (!workingDir || workingDir == "." || !path || path == "."){
+        let workingDir = this.getRootGitFolder();
+        let targetPath = withFilePath ? this.getWorkingFile() : workingDir;
+        if (!workingDir || workingDir == "." || !targetPath || targetPath == "."){
             vscode.window.showErrorMessage(`This command requires an existing file ${withFilePath ? "" : "or folder"} to be opened.`);
             return;
         }
@@ -91,12 +93,28 @@ export class TGit {
         let launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
         let cmd = `"${launcherPath}" /command:${command}`;
         if (withFilePath){
-            cmd += ` /path:"${path}"`;
+            cmd += ` /path:"${targetPath}"`;
         }
         if (additionalParams){
             cmd += " " + additionalParams;
         }
         require("child_process").exec(cmd, { cwd: workingDir }); 
+    }
+
+    private static getRootGitFolder(){
+        let workingDir = this.getWorkingDirectory();
+        let rootDir = workingDir;
+        while (!fs.existsSync(rootDir + path.sep + ".git")){
+            let parentDir = path.dirname(rootDir);
+            if (rootDir == parentDir){
+                rootDir = null;
+                break;
+            }
+            else {
+                rootDir = parentDir;
+            }
+        }
+        return rootDir || workingDir;
     }
 
     private static getWorkingDirectory(){
@@ -105,7 +123,7 @@ export class TGit {
         }
         let currentFile = this.getWorkingFile();
         if (currentFile){
-            return require("path").dirname(currentFile);
+            return path.dirname(currentFile);
         }
         return null;
     }

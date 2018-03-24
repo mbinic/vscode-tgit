@@ -7,7 +7,7 @@
         "tortoise",
         "keybindings"
     ],
-    "version": "1.1.1",
+    "version": "1.2.0",
     "publisher": "mbinic",
     "repository": {
         "type": "git",
@@ -43,7 +43,12 @@
         "onCommand:tgit.stashSave",
         "onCommand:tgit.stashPop",
         "onCommand:tgit.stashList",
-        "onCommand:tgit.sync"
+        "onCommand:tgit.sync",
+        "onCommand:tgit.bisectStart",
+        "onCommand:tgit.bisectGood",
+        "onCommand:tgit.bisectBad",
+        "onCommand:tgit.bisectSkip",
+        "onCommand:tgit.bisectReset"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -130,6 +135,26 @@
             {
                 "command": "tgit.sync",
                 "title": "TGit: Sync"
+            },
+            {
+                "command": "tgit.bisectStart",
+                "title": "TGit: Bisect Start"
+            },
+            {
+                "command": "tgit.bisectGood",
+                "title": "TGit: Bisect Good"
+            },
+            {
+                "command": "tgit.bisectBad",
+                "title": "TGit: Bisect Bad"
+            },
+            {
+                "command": "tgit.bisectSkip",
+                "title": "TGit: Bisect Skip"
+            },
+            {
+                "command": "tgit.bisectReset",
+                "title": "TGit: Bisect Reset"
             }
         ],
         "keybindings": [

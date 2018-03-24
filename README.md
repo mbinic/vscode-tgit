@@ -32,7 +32,9 @@ Current file shortcuts:
 * `(G)it File (B)lame` - Ctrl+Shift+Alt+G, Ctrl+Shift+Alt+B
 * `(G)it File (D)iff` - Ctrl+Shift+Alt+G, Ctrl+Shift+Alt+D
 
-To customize these shortcuts go to File -> Preferences -> Keyboard Shortcuts and copy them over to your user `keybindings.json` file, on the right. 
+Bisect commands are also available, but with no preset shortcuts.
+
+To customize shortcuts go to File -> Preferences -> Keyboard Shortcuts and copy them over to your user `keybindings.json` file, on the right. 
 
 Since these shortcuts will make Ctrl+G (Go To Line) inaccessible, you can redefine it to be e.g. Ctrl+G, Ctrl+G:
 ```javascript

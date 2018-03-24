@@ -20,6 +20,11 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("tgit.stashPop", () => TGit.stashPop()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.stashList", () => TGit.stashList()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.sync", () => TGit.sync()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectStart", () => TGit.bisectStart()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectGood", () => TGit.bisectGood()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectBad", () => TGit.bisectBad()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectSkip", () => TGit.bisectSkip()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectReset", () => TGit.bisectReset()));
 }
 
 export function deactivate() {

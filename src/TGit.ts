@@ -82,6 +82,26 @@ export class TGit {
         this.run("sync");
     }
 
+    public static bisectStart(){
+        this.run("bisect /start");
+    }
+
+    public static bisectGood(){
+        this.run("bisect /good");
+    }
+
+    public static bisectBad(){
+        this.run("bisect /bad");
+    }
+
+    public static bisectSkip(){
+        this.run("bisect /skip");
+    }
+
+    public static bisectReset(){
+        this.run("bisect /reset");
+    }
+
     private static run(command: string, withFilePath: boolean = false, additionalParams: string = null){
         let workingDir = this.getRootGitFolder();
         let targetPath = withFilePath ? this.getWorkingFile() : workingDir;

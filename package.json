@@ -7,11 +7,11 @@
     "tortoise",
     "keybindings"
   ],
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "mbinic",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mbinic/vscode-tgit.git"
+    "url": "https://github.com/mbinic/vscode-tgit.git"
   },
   "bugs": {
     "url": "https://github.com/mbinic/vscode-tgit/issues"
@@ -20,7 +20,7 @@
   "license": "MIT",
   "icon": "vscode-tgit-icon.png",
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.37.0"
   },
   "categories": [
     "Other"
@@ -235,15 +235,14 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
     "vscode:prepublish": "yarn run compile",
     "vscode:package": "vsce package",
     "vscode:publish": "vsce publish"
   },
   "devDependencies": {
-    "typescript": "^3.1.4",
-    "vscode": "^1.1.25",
-    "@types/node": "^8.10.25",
-    "vsce": "^1.55.0"
+    "typescript": "^3.3.1",
+    "@types/vscode": "^1.37.0",
+    "@types/node": "^10.12.21",
+    "vsce": "^1.66.0"
   }
 }

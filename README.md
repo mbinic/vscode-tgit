@@ -34,9 +34,11 @@ Current file shortcuts:
 
 Bisect commands are also available, but with no preset shortcuts.
 
-To customize shortcuts go to File -> Preferences -> Keyboard Shortcuts and copy them over to your user `keybindings.json` file, on the right. 
+**To customize shortcuts go to File -> Preferences -> Keyboard Shortcuts.**
 
-Since these shortcuts will make Ctrl+G (Go To Line) inaccessible, you can redefine it to be e.g. Ctrl+G, Ctrl+G:
+### Shortcut conflicts
+
+Since the default shortcuts will make Ctrl+G (Go To Line) inaccessible, you can change them, or just change the one for "Go To Line" to be e.g. Ctrl+G, Ctrl+G:
 ```javascript
 { "key": "Ctrl+g Ctrl+g", "command": "workbench.action.gotoLine" }
 ```

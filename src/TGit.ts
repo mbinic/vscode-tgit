@@ -102,6 +102,10 @@ export class TGit {
         this.run("bisect /reset");
     }
 
+    public static diffRepo() {
+        this.run("diff");
+    }
+
     private static run(command: string, withFilePath: boolean = false, additionalParams: string = null){
         let workingDir = this.getRootGitFolder();
         let targetPath = withFilePath ? this.getWorkingFile() : workingDir;

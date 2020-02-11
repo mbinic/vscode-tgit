@@ -36,6 +36,7 @@
     "onCommand:tgit.switch",
     "onCommand:tgit.merge",
     "onCommand:tgit.diff",
+    "onCommand:tgit.diffRepo",
     "onCommand:tgit.blame",
     "onCommand:tgit.pull",
     "onCommand:tgit.push",
@@ -103,6 +104,10 @@
       {
         "command": "tgit.diff",
         "title": "TGit: File Diff"
+      },
+      {
+        "command": "tgit.diffRepo",
+        "title": "TGit: Repository Diff"
       },
       {
         "command": "tgit.blame",

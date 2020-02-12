@@ -43,7 +43,7 @@ export class TGit {
     }
 
     public static diff(){
-        this.run("diff", true);
+        this.run("diff", true, true);
     }
 
     public static blame(){
@@ -51,7 +51,7 @@ export class TGit {
         if (vscode.window.activeTextEditor){
             line = vscode.window.activeTextEditor.selection.active.line + 1;
         }
-        this.run("blame", true, `/line:${line}`);
+        this.run("blame", true, true, `/line:${line}`);
     }
 
     public static pull(){
@@ -75,7 +75,7 @@ export class TGit {
     }
 
     public static stashList(){
-        this.run("reflog", false, '/ref:"refs/stash"');
+        this.run("reflog", false, false, '/ref:"refs/stash"');
     }
 
     public static sync(){
@@ -106,27 +106,31 @@ export class TGit {
         this.run("diff");
     }
 
-    private static run(command: string, withFilePath: boolean = false, additionalParams: string = null){
+    private static run(command: string, withFilePath: boolean = false, filePathRequired: boolean = false, additionalParams: string = null){
         let workingDir = this.getRootGitFolder();
         let targetPath = withFilePath ? this.getWorkingFile() : workingDir;
-        if (!workingDir || workingDir == "." || !targetPath || targetPath == "."){
-            vscode.window.showErrorMessage(`This command requires an existing file ${withFilePath ? "" : "or folder"} to be opened.`);
+        if (!workingDir || workingDir == "." || (filePathRequired && (!targetPath || targetPath == "."))){
+            vscode.window.showErrorMessage(`This command requires an existing file ${filePathRequired ? "" : "or folder"} to be opened.`);
             return;
         }
 
         let launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
         let cmd = `"${launcherPath}" /command:${command}`;
-        if (withFilePath){
+        if (withFilePath && targetPath){
             cmd += ` /path:"${targetPath}"`;
         }
         if (additionalParams){
             cmd += " " + additionalParams;
         }
-        require("child_process").exec(cmd, { cwd: workingDir }); 
+        require("child_process").exec(cmd, { cwd: workingDir });
     }
 
     private static getRootGitFolder(){
         let workingDir = this.getWorkingDirectory();
+        if (!workingDir){
+            return null;
+        }
+
         let rootDir = workingDir;
         while (!fs.existsSync(rootDir + path.sep + ".git")){
             let parentDir = path.dirname(rootDir);

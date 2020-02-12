@@ -9,6 +9,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("tgit.showFileLog", () => TGit.showFileLog()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.commit", () => TGit.commit()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.revert", () => TGit.revert()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.cleanup", () => TGit.cleanup()));
+    context.subscriptions.push(vscode.commands.registerCommand("tgit.resolve", () => TGit.resolve()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.switch", () => TGit.switch()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.merge", () => TGit.merge()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.diff", () => TGit.diff()));
@@ -25,7 +27,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectBad", () => TGit.bisectBad()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectSkip", () => TGit.bisectSkip()));
     context.subscriptions.push(vscode.commands.registerCommand("tgit.bisectReset", () => TGit.bisectReset()));
-    context.subscriptions.push(vscode.commands.registerCommand("tgit.cleanup", () => TGit.cleanup()));
 }
 
 export function deactivate() {

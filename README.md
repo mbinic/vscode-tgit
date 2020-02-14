@@ -24,6 +24,7 @@ Global shortcuts:
 * `(G)it (S)witch` - Ctrl+G, Ctrl+S
 * `(G)it S(y)nc` - Ctrl+S, Ctrl+Y
 * `(G)it Clea(n)up` - Ctrl+G, Ctrl+N
+* `(G)it Repository (D)iff` - Ctrl+G, Ctrl+D
 
 Current file shortcuts:
 

@@ -204,6 +204,10 @@
         "key": "ctrl+shift+alt+g ctrl+shift+alt+d"
       },
       {
+        "command": "tgit.diffRepo",
+        "key": "ctrl+g ctrl+d"
+      },
+      {
         "command": "tgit.blame",
         "key": "ctrl+shift+alt+g ctrl+shift+alt+b"
       },

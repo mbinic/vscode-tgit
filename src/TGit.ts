@@ -7,7 +7,7 @@ import * as fs from 'fs';
 export class TGit {
 
     public static fetch(){
-        this.run("fetch", false);
+        this.run("fetch");
     }
 
     public static showLog(){
@@ -43,7 +43,11 @@ export class TGit {
     }
 
     public static diff(){
-        this.run("diff", true, true);
+        this.run("diff", true);
+    }
+
+    public static diffRepo() {
+        this.run("diff");
     }
 
     public static blame(){
@@ -100,10 +104,6 @@ export class TGit {
 
     public static bisectReset(){
         this.run("bisect /reset");
-    }
-
-    public static diffRepo() {
-        this.run("diff");
     }
 
     private static run(command: string, withFilePath: boolean = false, filePathRequired: boolean = false, additionalParams: string = null){

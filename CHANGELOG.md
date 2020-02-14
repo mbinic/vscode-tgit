@@ -1,3 +1,10 @@
+## 1.3.0
+
+- Added repository diff command (#10)
+- Fixed resolve command (#11)
+- File log and resolve now fall back to directory when no file is open (#11)
+- File diff falls back to repository diff when no file is open
+
 ## 1.2.2
 
 - Updated dependencies

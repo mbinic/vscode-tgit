@@ -1,3 +1,8 @@
+## 1.4.0
+
+- Moved away from Yarn
+- Updated dependencies and VS Code target version
+
 ## 1.3.1
 
 - Fixed working with folders on network shares (#2) and WSL file systems (#13)

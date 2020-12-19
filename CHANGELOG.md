@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Fixed working with folders on network shares (#2) and WSL file systems (#13)
+
 ## 1.3.0
 
 - Added repository diff command (#10)
@@ -20,8 +24,8 @@
 
 ## 1.1.1
 
-- Launch commands from git root folder (containing .git subfolder).
+- Launch commands from git root folder (containing .git subfolder)
 
 ## 1.0.0
 
-- Initial release.
+- Initial release

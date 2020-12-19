@@ -20,7 +20,7 @@
   "license": "MIT",
   "icon": "vscode-tgit-icon.png",
   "engines": {
-    "vscode": "^1.37.0"
+    "vscode": "^1.52.0"
   },
   "categories": [
     "Other"
@@ -249,9 +249,9 @@
     "vscode:publish": "vsce publish"
   },
   "devDependencies": {
-    "typescript": "^3.3.1",
-    "@types/vscode": "^1.37.0",
-    "@types/node": "^10.12.21",
-    "vsce": "^1.66.0"
+    "@types/node": "^10.17.49",
+    "@types/vscode": "^1.52.0",
+    "typescript": "^3.9.7",
+    "vsce": "^1.83.0"
   }
 }

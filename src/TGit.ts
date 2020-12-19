@@ -107,22 +107,18 @@ export class TGit {
     }
 
     private static run(command: string, withFilePath: boolean = false, filePathRequired: boolean = false, additionalParams: string = null){
-        let workingDir = this.getRootGitFolder();
-        let targetPath = withFilePath ? this.getWorkingFile() : workingDir;
-        if (!workingDir || workingDir == "." || (filePathRequired && (!targetPath || targetPath == "."))){
-            vscode.window.showErrorMessage(`This command requires an existing file ${filePathRequired ? "" : "or folder"} to be opened.`);
+        let path = (withFilePath ? this.getWorkingFile() : null) || this.getRootGitFolder();
+        if (!path || path == "."){
+            vscode.window.showErrorMessage(`The '${command}' command requires an existing file ${filePathRequired ? "" : "or folder"} to be open.`);
             return;
         }
 
         let launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
-        let cmd = `"${launcherPath}" /command:${command}`;
-        if (withFilePath && targetPath){
-            cmd += ` /path:"${targetPath}"`;
-        }
+        let cmd = `"${launcherPath}" /command:${command} /path:"${path}"`;
         if (additionalParams){
             cmd += " " + additionalParams;
         }
-        require("child_process").exec(cmd, { cwd: workingDir });
+        require("child_process").exec(cmd);
     }
 
     private static getRootGitFolder(){

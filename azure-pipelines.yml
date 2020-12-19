@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn install
-    yarn run vscode:prepublish
-    yarn run vscode:package
+    npm install
+    npm run vscode:prepublish
+    npm run vscode:package
   displayName: 'Build Package'

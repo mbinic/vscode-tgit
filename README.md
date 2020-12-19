@@ -52,7 +52,7 @@ It is set to the default installation path of TortoiseGit, so you might need to 
 ---
 
 ## Running the code
-* run `node install` in the checkout directory to install dependencies
+* run `npm install` in the checkout directory to install dependencies
 * press `F5` to open a new VSCode window with the extension loaded
 * run a command from the command palette by pressing `Ctrl+Shift+P` and typing `tgit`
 * set breakpoints inside `src/extension.ts` to debug the extension

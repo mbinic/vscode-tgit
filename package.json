@@ -244,7 +244,7 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "npm run compile",
     "vscode:package": "vsce package",
     "vscode:publish": "vsce publish"
   },

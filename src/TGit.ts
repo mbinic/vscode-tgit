@@ -107,13 +107,13 @@ export class TGit {
     }
 
     private static run(command: string, withFilePath: boolean = false, filePathRequired: boolean = false, additionalParams: string = null){
-        let path = (withFilePath ? this.getWorkingFile() : null) || this.getRootGitFolder();
+        const path = this.getWorkingPath(withFilePath, filePathRequired);
         if (!path || path == "."){
             vscode.window.showErrorMessage(`The '${command}' command requires an existing file ${filePathRequired ? "" : "or folder"} to be open.`);
             return;
         }
 
-        let launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
+        const launcherPath = vscode.workspace.getConfiguration("tgit").get("launcherPath");
         let cmd = `"${launcherPath}" /command:${command} /path:"${path}"`;
         if (additionalParams){
             cmd += " " + additionalParams;
@@ -121,41 +121,45 @@ export class TGit {
         require("child_process").exec(cmd);
     }
 
-    private static getRootGitFolder(){
-        let workingDir = this.getWorkingDirectory();
-        if (!workingDir){
-            return null;
+    private static getWorkingPath(preferFilePath: boolean, filePathRequired: boolean): string {
+        let path = (preferFilePath ? this.getWorkingFile() : null);
+        if (filePathRequired) {
+            return path;
         }
 
-        let rootDir = workingDir;
-        while (!fs.existsSync(rootDir + path.sep + ".git")){
-            let parentDir = path.dirname(rootDir);
-            if (rootDir == parentDir){
-                rootDir = null;
+        return path
+            || this.getRootGitFolder(this.getWorkingFolder())
+            || this.getRootGitFolder(this.getWorkingFileFolder())
+    }
+
+    private static getRootGitFolder(currentFolder: string) : string {
+        if (!currentFolder){
+            return null;
+        }
+        while (!fs.existsSync(currentFolder + path.sep + ".git")) {
+            let parentDir = path.dirname(currentFolder);
+            if (currentFolder == parentDir){
+                currentFolder = null;
                 break;
             }
             else {
-                rootDir = parentDir;
+                currentFolder = parentDir;
             }
         }
-        return rootDir || workingDir;
+        return currentFolder;
     }
 
-    private static getWorkingDirectory(){
-        if (vscode.workspace.rootPath){
-            return vscode.workspace.rootPath;
-        }
-        let currentFile = this.getWorkingFile();
-        if (currentFile){
-            return path.dirname(currentFile);
-        }
-        return null;
+    private static getWorkingFolder() : string { 
+        const workspaceFolders = vscode.workspace.workspaceFolders;
+        return (workspaceFolders && workspaceFolders.length) ? workspaceFolders[0].uri.fsPath : null;
     }
 
-    private static getWorkingFile(){
-        if (vscode.window.activeTextEditor){
-            return vscode.window.activeTextEditor.document.fileName;
-        }
-        return null;
+    private static getWorkingFileFolder() : string {
+        const currentFile = this.getWorkingFile();
+        return currentFile ? path.dirname(currentFile) : null;
+    }
+
+    private static getWorkingFile() : string {
+        return vscode.window.activeTextEditor?.document.fileName;
     }
 }

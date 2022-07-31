@@ -1,3 +1,7 @@
+## 1.4.2
+
+- Extension will only run locally, i.e. not attempt to run on remote hosts
+
 ## 1.4.1
 
 - Using current file path to look for .git folder when the workspace folder is not a git repo (#2)

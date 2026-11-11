@@ -143,6 +143,14 @@
       {
         "command": "tgit.bisectReset",
         "title": "TGit: Bisect Reset"
+      },
+      {
+        "command": "tgit.revisionGraph",
+        "title": "TGit: Revision Graph"
+      },
+      {
+        "command": "tgit.settingsWindow",
+        "title": "TGit: Tortoise Git Settings Window"
       }
     ],
     "keybindings": [
@@ -225,6 +233,10 @@
       {
         "command": "tgit.revisionGraph",
         "key": "ctrl+g ctrl+g"
+      },
+      {
+        "command": "tgit.settingsWindow",
+        "key": "ctrl+g ctrl+,"
       }
     ]
   },

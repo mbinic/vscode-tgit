@@ -60,6 +60,10 @@ export class TGit {
         this.run("revisiongraph");
     }
 
+    public static settingsWindow() {
+        this.run("settings");
+    }
+
     public static blame(){
         let line = 1;
         if (vscode.window.activeTextEditor){

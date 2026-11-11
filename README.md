@@ -27,6 +27,7 @@ Global shortcuts:
 * `(G)it Repository (D)iff` - Ctrl+G, Ctrl+D
 * `(G)it R(e)solve Conflicts` - Ctrl+G, Ctrl+E
 * `(G)it Revision (G)raph` - Ctrl+G, Ctrl+G
+* `(G)it Settings` - Ctrl+G, Ctrl+,
 
 Current file shortcuts:
 

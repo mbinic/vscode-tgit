@@ -51,7 +51,7 @@ Since the default shortcuts will make Ctrl+G (Go To Line) inaccessible, you can 
 This extension contributes the `tgit.launcherPath` setting, specifying the full path to `TortoiseGitProc.exe`.
 It is set to the default installation path of TortoiseGit, so you might need to adjust it if you installed elsewhere.
 
-`tgit.remotePathOverrides` is intended for devcontainer (and maybe other remote?) users. 
+`tgit.remotePathOverrides` is intended for devcontainer and WSL2 users. 
 Checks if a file is on a `remotePath` and replaces that portion of the path with the `localPath`.
 Supports mutli-folder workspaces.  
 ```

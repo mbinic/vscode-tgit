@@ -1,3 +1,8 @@
+
+## 1.5.2
+
+- Added `TGit: Settings` (ctrl+g, ctrl+,) - opens the tortoise git settings window
+
 ## 1.5.1
 
 - tgit.resolve is repo-level only. file-level opens the same dialog, but filtered to only show the current file, and only if it's conflicted.  Repo-level just shows all conflicted files.
@@ -7,7 +12,7 @@
 - Added devcontainer support via `settings.json` `tgit.remotePathOverrides`
   - may also work for supporting other remote environments
 - Support multi-folder workspaces
-  - If a command is issued on a file in project-folder #2, then it should open the TortoiseGit UI for project #2, not project #1
+  - If a command is issued on a file in project-folder B, then it should open the TortoiseGit UI for project B, not project A
 - Added Git Revision Graph (ctrl+g, ctrl+g)
 - Added Output panel info/warnings/errors to help the user
 - Strictly differentiate "Diff" vs "File Diff"

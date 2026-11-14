@@ -7,7 +7,7 @@
     "tortoise",
     "keybindings"
   ],
-  "version": "1.4.2",
+  "version": "1.6.0",
   "publisher": "mbinic",
   "repository": {
     "type": "git",
@@ -20,39 +20,13 @@
   "license": "MIT",
   "icon": "vscode-tgit-icon.png",
   "engines": {
-    "vscode": "^1.52.0"
+    "vscode": "^1.138.0"
   },
   "extensionKind": [
     "ui"
   ],
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:tgit.fetch",
-    "onCommand:tgit.showLog",
-    "onCommand:tgit.showFileLog",
-    "onCommand:tgit.commit",
-    "onCommand:tgit.revert",
-    "onCommand:tgit.cleanup",
-    "onCommand:tgit.resolve",
-    "onCommand:tgit.switch",
-    "onCommand:tgit.merge",
-    "onCommand:tgit.diff",
-    "onCommand:tgit.diffRepo",
-    "onCommand:tgit.blame",
-    "onCommand:tgit.pull",
-    "onCommand:tgit.push",
-    "onCommand:tgit.rebase",
-    "onCommand:tgit.stashSave",
-    "onCommand:tgit.stashPop",
-    "onCommand:tgit.stashList",
-    "onCommand:tgit.sync",
-    "onCommand:tgit.bisectStart",
-    "onCommand:tgit.bisectGood",
-    "onCommand:tgit.bisectBad",
-    "onCommand:tgit.bisectSkip",
-    "onCommand:tgit.bisectReset"
   ],
   "main": "./out/src/extension",
   "contributes": {
@@ -64,6 +38,12 @@
           "type": "string",
           "default": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
           "description": "Path to the TortoiseGit command launcher (TortoiseGitProc.exe)."
+        },
+        "tgit.pathOverrides": {
+          "type": "array",
+          "default": "",
+          "scope": "resource",
+          "description": "Allows your to replace the beginning portion of a file path with a file path that TortoiseGit can find. Supports multiple definitions for multi-folder workspaces, and for complex chained solutions (see readme). Example definition: [{\"fromRoot\": \"/workspaces/<project>\", \"toRoot\": \"C:\\Users\\<user>\\repos\\<project>\"}]"
         }
       }
     },
@@ -94,7 +74,7 @@
       },
       {
         "command": "tgit.resolve",
-        "title": "TGit: Resolve"
+        "title": "TGit: Resolve Conflicts"
       },
       {
         "command": "tgit.switch",
@@ -163,6 +143,14 @@
       {
         "command": "tgit.bisectReset",
         "title": "TGit: Bisect Reset"
+      },
+      {
+        "command": "tgit.revisionGraph",
+        "title": "TGit: Revision Graph"
+      },
+      {
+        "command": "tgit.settingsWindow",
+        "title": "TGit: Tortoise Git Settings Window"
       }
     ],
     "keybindings": [
@@ -241,6 +229,14 @@
       {
         "command": "tgit.sync",
         "key": "ctrl+g ctrl+y"
+      },
+      {
+        "command": "tgit.revisionGraph",
+        "key": "ctrl+g ctrl+g"
+      },
+      {
+        "command": "tgit.settingsWindow",
+        "key": "ctrl+g ctrl+,"
       }
     ]
   },
@@ -252,9 +248,12 @@
     "vscode:publish": "vsce publish"
   },
   "devDependencies": {
-    "@types/node": "^10.17.49",
-    "@types/vscode": "^1.52.0",
-    "typescript": "^3.9.7",
-    "vsce": "^1.83.0"
+    "@types/node": "^26.6.3",
+    "@types/vscode": "^1.138.0",
+    "@vscode/vsce": "^4.0.0",
+    "typescript": "^5.9.3"
+  },
+  "allowScripts": {
+    "@vscode/vsce-sign@2.1.0": true
   }
 }

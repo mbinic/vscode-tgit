@@ -50,21 +50,44 @@ Since the default shortcuts will make Ctrl+G (Go To Line) inaccessible, you can 
 
 This extension contributes the `tgit.launcherPath` setting, specifying the full path to `TortoiseGitProc.exe`.
 It is set to the default installation path of TortoiseGit, so you might need to adjust it if you installed elsewhere.
+If using TortoiseGit on linux with wine, it is usually invoked with `wine "~/.wine/drive_c/Program Files/TortoiseGit/bin/TortoiseGitProc.exe"`, but this won't work, so you should set `tgit.launcherPath: "tgit"` and create a small wrapper:
 
-`tgit.remotePathOverrides` is intended for devcontainer and WSL2 users. 
-Checks if a file is on a `remotePath` and replaces that portion of the path with the `localPath`.
-Supports mutli-folder workspaces.  
+```bash
+FILE="~/.local/bin/tgit"
+sudo tee "${FILE}" > /dev/null << EOF
+EOF
+#!/bin/bash
+# ".wine" must correspond to your correct wine prefix (.wine is default)
+exec wine "$HOME/.wine/drive_c/Program Files/TortoiseGit/bin/TortoiseGitProc.exe" "$@"
+EOF
+chmod +x ${FILE}
 ```
-    "tgit.remotePathOverrides": [
+
+`tgit.pathOverrides` is intended for devcontainer, WSL2, and linux PC users. 
+Checks if a file path matches `fromRoot` and replaces that portion of the path with `toRoot`.
+Supports mutli-folder workspaces.
+```js
+    "tgit.pathOverrides": [
         // devcontainer example
         {
-            "remotePath": "/workspaces/<project>",
-            "localPath": "C:\\Users\\<user>\\repos\\<project>",
+            "fromRoot": "/workspaces/<project>",
+            "toRoot": "C:\\Users\\<user>\\repos\\<project>",
         },
         // multi-folder example that points to a local wsl location
         {
-            "remotePath": "/workspaces/<project2>",
-            "localPath": "\\\\wsl.localhost\\Ubuntu-26.04\\home\\<user>\\<project2>",
+            "fromRoot": "/workspaces/<project2>",
+            "toRoot": "\\\\wsl.localhost\\Ubuntu-26.04\\home\\<user>\\<project2>",
+        },
+        // linux PC (with TortoiseGit on wine) and running a linux devcontainer (chained replacements)
+        {
+            // first, convert from linux devcontainer to linux PC filesystem so that the plugin can look for the nearest .git folder
+            "fromRoot": "/workspaces/<project2>",
+            "toRoot": "/home/<user>/projects/<project2>",
+        },
+        {
+            // second, convert from linux PC to wine's fake windows filesystem so TortoiseGit can find the file
+            "fromRoot": "/home/<user>/projects/<project2>",
+            "toRoot": "z:/home/<user>/projects/<project2>",
         },
     ]
 ```

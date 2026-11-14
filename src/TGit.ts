@@ -141,6 +141,7 @@ export class TGit {
 
         // Current file path (works for local project)
         // devcontainer will get a mixed-os path, eg. "\\workspaces\\<project>""
+        // (windows delimiters on linux path)
         pathsToTry.push(vscode.window.activeTextEditor?.document.uri.fsPath || "");
         // Current file path (works better for remote/devcontainer/wsl) 
         // devcontainer will get the remote path without OS-mixing, eg. /workspace/<project>
@@ -157,82 +158,96 @@ export class TGit {
         }
 
         // find the first valid path
+        let pathsTried = "";
         for (const pathToTry of pathsToTry) {
-            const tgitFriendlyPath = this.getTortoiseGitFriendlyPath(pathToTry);
-            if (tgitFriendlyPath) {
-                if (!filePathRequired) {
-                    // if a specific file is not required, we must return git root
-                    // eg. for "Diff" we need to return the git root not the 
-                    // current file, as that will display the "File-Diff"
-                    return this.getRootGitFolder(tgitFriendlyPath);
-                }
-                return tgitFriendlyPath;
-            }
+            // if a specific file is not required, we must return git root
+            // eg. for "Diff" we need to return the git root not the 
+            // current file, as that will display the "File-Diff"
+            const tgitFriendlyPath = this.getTortoiseGitFriendlyPath(pathToTry, !filePathRequired);
+            if (tgitFriendlyPath) return tgitFriendlyPath;
+            pathsTried += pathToTry + "\n";
         }
-                
-        const msg = `Couldn't get valid path for TortoiseGit.  May need to bo focused on file from a git project in text editor panel.  Tried\n: ${JSON.stringify(pathsToTry)}`;
+
+        const msg = `No valid TortoiseGit file path found.\n
+        Are you triggering while focus is not a file from a git project?\n
+        Is the file within a git project (a parent dir has a .git folder)?\n
+        You may need to configure setting: "tgit.pathOverrides"\n
+        File paths tried:\n${pathsToTry.join("\n")}`
         this.log.error(msg);
         throw new Error(msg);
     }
 
     /**
-     * To be a TortoiseGit friendly path it must be a path written in the 
-     * correct OS's syntax, it must be a path that TortoiseGit can actually 
-     * find, and it must be or have a parent directory that has a .git folder.
-     * @param pathToConvert 
+     * To be a TortoiseGit friendly path it must be a path that TortoiseGit can
+     * actually find, and it must be or have a parent directory that has a .git
+     * folder.
+     * For the first condition, there are many cases to cover:
+     * 1) Windows PC, nothing remote
+     *      fs get git root
+     * 2) Windows PC, linux devcontainer (code located on windows filesystem)
+     *      apply path overrides -> fs get git root
+     * 3) Windows PC, linux devcontainer (code located on wsl filesystem)
+     *      untested, assume same as above
+     * 4) Linux PC, running TortoiseGit in wine (code on linux filesystem)
+     *      fs get git root -> apply path overrides
+     * 5) Linux PC, running TortoiseGit in wine (code on wine windows filesystem)
+     *      untested, assume same as above
+     * 5) Linux PC, running TortoiseGit in wine, linux devcontainer (code on linux filesystem)
+     *      apply overrides (translate to PC path) -> fs get git root -> apply overrides (translate to wine windows path)
+     * @param pathOriginal 
+     * @param getGitRoot - should return the nearest parent folder that has a 
+     * .git folder
      * @returns "" if the path is unusable by tgit, else the converted path
      */
-    private static getTortoiseGitFriendlyPath(pathToConvert: string): string {
-        // if the file path doesn't exist:
-        // 1) The user might be on the output panel (in a devcontainer this 
-        //   returns a string)
-        // 2) The user might be in a remote env (devcontainer). (this returns an
-        //   invalid, mixed-os  path like \\workspaces\\<project>)
-        if (!fs.existsSync(pathToConvert)) {
-            // assume 2) and try using overrides
-            pathToConvert = this.applyRemotePathOverrides(pathToConvert);
-            // If file path still doesn't exist, it's probably 1), so it's invalid
-            if (!fs.existsSync(pathToConvert)) return "";
+    private static getTortoiseGitFriendlyPath(pathOriginal: string, getGitRoot: boolean): string {
+        
+        let lastPath;
+        let currentPath = pathOriginal;
+        let isValid = false;
+        // repeatedly look for git root (if requested), and apply overrides, 
+        // until no changes to cover all cases
+        while (lastPath != currentPath) {
+            lastPath = currentPath;
+            // try to get git root first
+            if (getGitRoot) {
+                let gitRoot = this.getRootGitFolder(currentPath);
+                if (gitRoot) currentPath = gitRoot;
+            }
+            // at some point of all the conversions the file path must exist to be valid
+            if (fs.existsSync(currentPath)) isValid = true;
+            // apply any overrides
+            let overridenPath = this.applyPathOverrides(currentPath);
+            if (overridenPath) currentPath = overridenPath;
         }
-
-        // get the file's git folder
-        let gitFolder = this.getRootGitFolder(pathToConvert);
-
-        // To be a valid file path it must be inside of a git project
-        if (!gitFolder) {
-            this.log.warn(`File "${pathToConvert}" is not within a git project.`)
-            return "";
-        }
-
-        return pathToConvert;
+        return isValid ? currentPath : "";
     }
 
     /**
      * Note: fs and path runs against the local machine's filesystem (for 
-     * remote/devcontainer users), so currentPath must be converted before
+     * remote/devcontainer users), so currentPath must be know to the local
+     * machine's file system for this to work.
      * @param currentPath in local machine's os's format
      * @returns 
      */
     private static getRootGitFolder(currentPath: string) : string {
         if (!currentPath || !fs.existsSync(currentPath)) return "";
+        const originalPath = currentPath;
 
-        while (!fs.existsSync(currentPath + path.sep + ".git")) {
-            let parentDir = path.dirname(currentPath);
-            if (currentPath == parentDir){
-                currentPath = "";
-                break;
-            }
-            else {
-                currentPath = parentDir;
-            }
+        let lastPath;
+        while (currentPath != lastPath) {
+            if (fs.existsSync(currentPath + path.sep + ".git")) return currentPath;
+            // else, go up one level
+            currentPath = path.dirname(currentPath);
         }
-        return currentPath;
+        // we reached the file system root and no .git was found
+        this.log.info(`Could not find matching tgit.pathOverrides for "${originalPath}"`)
+        return "";
     }
 
     /**
      * Attempts to convert a (suspected) remote path to a local path.
      * 
-     * Utilizes settings in tgit.remotePathOverrides.
+     * Utilizes settings in tgit.pathOverrides.
      * 
      * eg. replace /workspace/<project> with C:\Users\<user>\repos\<project>.
      * This is meant for remote/devcontainer/wsl users so that we can return
@@ -249,26 +264,26 @@ export class TGit {
      * @returns The converted path, or an empty string.  Empty string if it 
      * can't get a positive fs.exists result before or after conversion.
      */
-    private static applyRemotePathOverrides(remoteFilePath: string): string {
-        // get tgit.remotePathOverrides settings.json
-        const remotePathOverrides = vscode.workspace.getConfiguration('tgit').get<[{ remotePath : string, localPath : string }]>('remotePathOverrides') || [];
+    private static applyPathOverrides(remoteFilePath: string): string {
+        // get tgit.pathOverrides settings.json
+        const pathOverrides = vscode.workspace.getConfiguration('tgit').get<{ fromRoot : string, toRoot : string }[]>('pathOverrides', []);
         
         // If we're in a remote env (devcontainer), but don't have the override setting, warn user
-        if (vscode.env.remoteName && !remotePathOverrides.length) {
-            vscode.window.showErrorMessage("You appear to be in a remote env (eg. devcontainer), but haven't set tgit.remotePathOverrides, tgit-cmds will likely not work.");
+        if (vscode.env.remoteName && !pathOverrides.length) {
+            vscode.window.showErrorMessage("You appear to be in a remote env (eg. devcontainer), but haven't set tgit.pathOverrides, tgit-cmds will likely not work.");
         }
         
         // Find the matching override
         let override;
-        for (const remotePathOverride of remotePathOverrides) {
-            const isChildPath = this.isChildPath(remotePathOverride.remotePath, remoteFilePath);
-            if (isChildPath) override = remotePathOverride;
+        for (const pathOverride of pathOverrides) {
+            const isChildPath = this.isChildPath(pathOverride.fromRoot, remoteFilePath);
+            if (isChildPath) override = pathOverride;
         }
         
         // if no match, just leave the path alone
         if (!override) {
             if (vscode.env.remoteName) {
-                this.log.warn(`Could not find matching tgit.remotePathOverrides for "${remoteFilePath}"`)
+                this.log.info(`Could not find matching tgit.pathOverrides for "${remoteFilePath}"`)
             }
             return remoteFilePath;
         }
@@ -276,16 +291,16 @@ export class TGit {
         // Else, need to replace the remote folder with the local one
 
         // Is path windows (so we know what separator to use)
-        const remotePathOS = this.getOSPathModuleForFilePath(override.remotePath);
-        const localPathOS = this.getOSPathModuleForFilePath(override.localPath);
+        const fromRootOS = this.getOSPathModuleForFilePath(override.fromRoot);
+        const toRootOS = this.getOSPathModuleForFilePath(override.toRoot);
         
-        // remove the matched remotePath
-        const relative = remotePathOS.relative(override.remotePath, remoteFilePath);
+        // remove the matched fromRoot
+        const relative = fromRootOS.relative(override.fromRoot, remoteFilePath);
         // segment the relative path to make it OS-agnostic
-        const segments = relative.split(remotePathOS.sep);
+        const segments = relative.split(fromRootOS.sep);
 
         // append the segments to the local folder override
-        return localPathOS.join(override.localPath, ...segments);
+        return toRootOS.join(override.toRoot, ...segments);
     }
 
     private static isChildPath(parent : string, child : string): Boolean {

@@ -7,7 +7,7 @@
     "tortoise",
     "keybindings"
   ],
-  "version": "1.5.2",
+  "version": "1.6.0",
   "publisher": "mbinic",
   "repository": {
     "type": "git",
@@ -39,11 +39,11 @@
           "default": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
           "description": "Path to the TortoiseGit command launcher (TortoiseGitProc.exe)."
         },
-        "tgit.remotePathOverrides": {
+        "tgit.pathOverrides": {
           "type": "array",
           "default": "",
           "scope": "resource",
-          "description": "Allows your to replace remotePath portion of a filePath with a localPath that TortoiseGit can find. Supports multiple definitions for multi-folder workspaces. Example definition: [{\"remotePath\": \"/workspaces/<project>\", \"localPath\": \"C:\\Users\\<user>\\repos\\<project>\"}]"
+          "description": "Allows your to replace the beginning portion of a file path with a file path that TortoiseGit can find. Supports multiple definitions for multi-folder workspaces, and for complex chained solutions (see readme). Example definition: [{\"fromRoot\": \"/workspaces/<project>\", \"toRoot\": \"C:\\Users\\<user>\\repos\\<project>\"}]"
         }
       }
     },

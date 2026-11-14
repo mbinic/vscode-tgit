@@ -1,3 +1,6 @@
+## 1.6.0
+
+- Support for linux PCs that have TortoiseGit installed (probably through wine).
 
 ## 1.5.2
 
@@ -9,7 +12,7 @@
 
 ## 1.5.0
 
-- Added devcontainer support via `settings.json` `tgit.remotePathOverrides`
+- Added devcontainer support via `settings.json` `tgit.pathOverrides`
   - may also work for supporting other remote environments
 - Support multi-folder workspaces
   - If a command is issued on a file in project-folder B, then it should open the TortoiseGit UI for project B, not project A
